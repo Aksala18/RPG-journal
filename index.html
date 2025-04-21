@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RPG Journal</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav>
+    <a href="index.html">Main</a>
+    <a href="world.html">World</a>
+    <a href="character.html">Character</a>
+    <a href="journal.html">Journal</a>
+  </nav>
+
+  <section id="character" class="character-section">
+    <img src="https://assets.onecompiler.app/43fh2rv4h/43fgtr924/Character-sample.png" alt="Character" />
+    <h1 id="char-name">Character’s Name</h1>
+    <div class="stats" id="stats"></div>
+    <div class="entry-form">
+      <textarea id="new-entry" placeholder="Write your new entry..."></textarea>
+      <div id="stat-update"></div>
+      <input type="submit" value="Save Entry" onclick="saveEntry()" />
+      <input type="button" value="Delete Last Entry" onclick="deleteLastEntry()" />
+      <input type="button" value="Undo Last Stat Update" onclick="undoLastStatUpdate()" />
+    </div>
+  </section>
+
+  <script>
+    const character = {
+      name: "Character’s Name",
+      stats: {
+        Academic: { focus: 3, knowledge: 4, memory: 3, discipline: 1, analysis: 2 },
+        Soul: { creativity: 5, empathy: 4, willpower: 1, instinct: 5, perception: 2 },
+        Physical: { stamina: 2, agility: 1, endurance: 2, control: 3, strength: 4 },
+      },
+      entries: JSON.parse(localStorage.getItem('entries')) || [],
+    };
+
+    let previousStats = JSON.parse(localStorage.getItem("characterStats")) || { ...character.stats };
+    let previousEntries = JSON.parse(localStorage.getItem("entries")) || [];
+
+   function renderStats() {
+      const statsDiv = document.getElementById("stats");
+      const updateDiv = document.getElementById("stat-update");
+      statsDiv.innerHTML = `<div class="stats-wrapper" id="stats-wrapper"></div>`;
+      updateDiv.innerHTML = "";
+    
+      for (const group in character.stats) {
+        const groupTitle = `<h3>${group}</h3>`;
+        let groupContent = "<ul>";
+        let updateControls = `<h3>${group}</h3><ul>`;
+    
+        for (const stat in character.stats[group]) {
+          const value = character.stats[group][stat];
+          groupContent += `<li>${stat} ${value}</li>`;
+          updateControls += `<li>${stat} <button onclick="updateStat('${group}','${stat}',-1)">-</button>${value}<button onclick="updateStat('${group}','${stat}',1)">+</button></li>`;
+        }
+    
+        groupContent += "</ul>";
+        updateControls += "</ul>";
+    
+        document.getElementById("stats-wrapper").innerHTML += `<div class="stat-box">${groupTitle + groupContent}</div>`;
+        updateDiv.innerHTML += `<div class="stat-box">${updateControls}</div>`;
+      }
+    }
+
+
+    function updateStat(group, stat, delta) {
+      previousStats = { ...character.stats }; // Armazena o estado anterior das stats
+      character.stats[group][stat] += delta;
+      // Salva as stats no localStorage
+      localStorage.setItem("characterStats", JSON.stringify(character.stats));
+      renderStats();
+    }
+
+    function saveEntry() {
+      const text = document.getElementById("new-entry").value.trim();
+      if (!text) return;
+      const date = new Date().toLocaleDateString();
+      const newEntry = { date, text };
+      previousEntries = [...character.entries]; // Armazena o estado anterior das entradas
+      character.entries.unshift(newEntry);
+      localStorage.setItem('entries', JSON.stringify(character.entries));
+      document.getElementById("new-entry").value = "";
+      renderEntries();
+    }
+
+    function renderEntries() {
+      const entriesDiv = document.getElementById("entries");
+      entriesDiv.innerHTML = character.entries
+        .map(e => `<h3>${e.date}</h3><p>${e.text}</p>`)
+        .join("");
+    }
+
+    function deleteLastEntry() {
+      // Remove a última entrada do diário
+      previousEntries = [...character.entries]; // Armazena o estado anterior das entradas
+      character.entries.shift();
+      localStorage.setItem('entries', JSON.stringify(character.entries));
+      renderEntries();
+    }
+
+    function undoLastStatUpdate() {
+      // Reverte para o estado anterior das stats
+      localStorage.setItem("characterStats", JSON.stringify(previousStats));
+      character.stats = { ...previousStats }; // Atualiza a variável `character.stats`
+      renderStats();
+    }
+
+    document.getElementById("char-name").innerText = character.name;
+    renderStats();
+    renderEntries();
+  </script>
+</body>
+</html>

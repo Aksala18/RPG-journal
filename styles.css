@@ -1,0 +1,124 @@
+body {
+  margin: 0;
+  font-family: "Georgia", serif;
+  background: url('https://www.transparenttextures.com/patterns/paper-fibers.png') repeat;
+  background-color: #f3e4c6;
+  color: #1c1c1c;
+}
+
+nav {
+  background-color: #a39274;
+  padding: 10px;
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+section {
+  padding: 20px;
+}
+
+h1, h2, h3 {
+  font-family: "Georgia", serif;
+}
+
+.character-section img {
+  float: left;
+  margin-right: 20px;
+  width: 150px;
+}
+
+.stat-controls button {
+  margin: 0 5px;
+  font-weight: bold;
+}
+
+.stats, .bio, .entry-form, .entries {
+  margin-top: 20px;
+}
+
+.stat-group {
+  margin-bottom: 10px;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+  font-family: "Georgia", serif;
+}
+
+input[type="submit"] {
+  background-color: #a39274;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#stat-update {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+
+.stats {
+  margin-top: 20px;
+}
+
+
+.stat-box {
+  background-color: #e0c9a6;
+  border: 2px solid #8b5e3c;
+  border-radius: 10px;
+  padding: 15px;
+  width: 100%;
+  max-width: 300px;
+  color: #3e2f1c;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+  flex: 1 1 250px; /* 👈 garante que elas alinham lado a lado se houver espaço */
+}
+
+.stat-box:hover {
+  transform: scale(1.02);
+}
+
+.stat-box ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.stat-box h3 {
+  margin-top: 0;
+  border-bottom: 1px solid #8b5e3c;
+  padding-bottom: 5px;
+}
+
+.stats-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* <- aqui está a mudança! */
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.character-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+
+
+.hidden {
+  display: none;
+}

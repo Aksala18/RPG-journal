@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Journal</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav>
+    <a href="index.html">Main</a>
+    <a href="world.html">World</a>
+    <a href="character.html">Character</a>
+    <a href="journal.html">Journal</a>
+  </nav>
+
+  <section id="journal">
+    <h1>Journal Entries</h1>
+    <div class="entries" id="entries"></div>
+  </section>
+
+  <script>
+    // Carregar entradas do localStorage
+    const character = {
+      entries: JSON.parse(localStorage.getItem('entries')) || []
+    };
+
+    function renderEntries() {
+      const entriesDiv = document.getElementById("entries");
+      entriesDiv.innerHTML = character.entries
+        .map(e => `<h3>${e.date}</h3><p>${e.text}</p>`)
+        .join("");
+    }
+
+    renderEntries();
+  </script>
+</body>
+</html>

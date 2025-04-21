@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Character</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav>
+    <a href="index.html">Main</a>
+    <a href="world.html">World</a>
+    <a href="character.html">Character</a>
+    <a href="journal.html">Journal</a>
+  </nav>
+
+  <section id="character" class="character-section">
+    <div class="character-header">
+      <img src="https://assets.onecompiler.app/43fh2rv4h/43fgtr924/Character-sample.png" alt="Character" class="character-image" />
+      <div class="character-info">
+        <h1 id="char-name">Character’s Name</h1>
+        <p id="char-bio">Character's biography goes here...</p>
+      </div>
+    </div>
+    
+    <div class="stats">
+      <h2>Character Stats</h2>
+      <div class="stats-wrapper" id="stats"></div>
+    </div>
+
+  </section>
+
+  <script>
+    const character = {
+      name: "Character’s Name",
+      stats: JSON.parse(localStorage.getItem("characterStats")) || {
+        Academic: { focus: 3, knowledge: 4, memory: 3, discipline: 1, analysis: 2 },
+        Soul: { creativity: 5, empathy: 4, willpower: 1, instinct: 5, perception: 2 },
+        Physical: { stamina: 2, agility: 1, endurance: 2, control: 3, strength: 4 },
+      },
+      entries: []
+    };
+    
+    function renderStats() {
+      const statsDiv = document.getElementById("stats");
+      statsDiv.innerHTML = "";
+    
+      for (const group in character.stats) {
+        let groupContent = `<div class="stat-box"><h3>${group}</h3><ul>`;
+        for (const stat in character.stats[group]) {
+          const value = character.stats[group][stat];
+          groupContent += `<li>${stat}: ${value}</li>`;
+        }
+        groupContent += "</ul></div>";
+        statsDiv.innerHTML += groupContent;
+      }
+    }
+
+
+    document.getElementById("char-name").innerText = character.name;
+    document.getElementById("char-bio").innerText = character.bio;
+    renderStats();
+  </script>
+</body>
+</html>
