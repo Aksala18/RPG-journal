@@ -23,4 +23,3 @@ Este projeto é um diário interativo de RPG desenvolvido com HTML, CSS e JavaSc
 ## Contribuições
 
 Se você quiser contribuir, fique à vontade para abrir um pull request ou reportar problemas na seção de "Issues".
-
